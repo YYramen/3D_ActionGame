@@ -11,9 +11,6 @@ public class PlayerMove : MonoBehaviour
     [Tooltip("移動方向")] Vector3 _moveDirection;
     [Tooltip("移動方向にかける velocity ")] Vector3 _moveVelocity;
 
-    [SerializeField, Tooltip("ジャンプ力")] float _jumpPower = 10f;
-    [Tooltip("ジャンプキーが押されたかどうかのフラグ")] bool _jumpActive = false;
-
     Rigidbody _rb;
 
     private void Awake()
@@ -29,8 +26,6 @@ public class PlayerMove : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-
-        Jump();
     }
 
     /// <summary>
@@ -59,22 +54,6 @@ public class PlayerMove : MonoBehaviour
 
         // 変数に速度を代入
         _moveVelocity = moveForward * _moveSpeed + new Vector3(0, _rb.velocity.y, 0);
-
-        // キャラクターの向きを進行方向に調整する
-        //if (moveForward != Vector3.zero)
-        //{
-        //    transform.rotation = Quaternion.LookRotation(moveForward);
-        //}
-
-        // ジャンプの入力を受け付けて、押されたらフラグを true に、それ以外の時は false にする
-        if (Input.GetButtonDown("Jump"))
-        {
-            _jumpActive = true;
-        }
-        else
-        {
-            _jumpActive = false;
-        }
     }
 
     /// <summary>
@@ -82,17 +61,7 @@ public class PlayerMove : MonoBehaviour
     /// </summary>
     private void Move()
     {
+        // InputMoveで作られたベクトル、速度をAddforceする
         _rb.AddForce(_moveVelocity, ForceMode.Force);
-    }
-
-    /// <summary>
-    /// Space キーを押したときにプレイヤーをジャンプさせる関数
-    /// </summary>
-    private void Jump()
-    {
-        if (_jumpActive)
-        {
-            _rb.AddForce(Vector3.up * _jumpPower, ForceMode.Impulse);
-        }
     }
 }

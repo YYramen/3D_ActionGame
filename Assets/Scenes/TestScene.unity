@@ -1790,6 +1790,7 @@ GameObject:
   - component: {fileID: 579513831}
   - component: {fileID: 579513830}
   - component: {fileID: 579513835}
+  - component: {fileID: 579513836}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -14425,7 +14426,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 10
-  _jumpPower: 10
+--- !u!114 &579513836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579513828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a858fc0a10aef846a6c9a1e65a2edff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _jumpPower: 5
+  _rayDistance: 0.5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -14694,6 +14708,7 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: MainCamera
@@ -14814,9 +14829,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _character: {fileID: 579513829}
   _camera: {fileID: 963194228}
-  _rotateSpeed: 5
-  _yMaxRotation: 70
-  _yMinRotation: -40
+  _rotateSpeed: 10
+  _xMaxRotation: 20
+  _xMinRotation: -30
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d919007c176f9ed4a9825f3323ab3e5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 579513828}
+  cam: {fileID: 963194227}
+  rotate_speed: 3
+  axisPos: {x: 1.5, y: 2, z: -3}
+  scroll: 0
+  scrollLog: 0
 --- !u!1 &1031546290
 GameObject:
   m_ObjectHideFlags: 0

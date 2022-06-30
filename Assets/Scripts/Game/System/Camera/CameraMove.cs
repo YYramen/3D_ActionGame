@@ -11,8 +11,8 @@ public class CameraMove : MonoBehaviour
     [SerializeField, Tooltip("カメラの位置")] Transform _camera;
     [SerializeField, Tooltip("回転速度")] float _rotateSpeed = 5f;
 
-    [SerializeField, Tooltip("カメラのY軸の限界(＋)")] float _yMaxRotation = 70f;
-    [SerializeField, Tooltip("カメラのY軸の限界(ー)")] float _yMinRotation = -40f;
+    [SerializeField, Tooltip("カメラのX軸の角度の限界(＋)")] float _xMaxRotation = 70f;
+    [SerializeField, Tooltip("カメラのX軸の角度の限界(ー)")] float _xMinRotation = -30f;
     [Tooltip("マウスの X軸 の値を格納する")] float _xRotation = 0f;
     [Tooltip("マウスの Y軸 の値を格納する")] float _yRotation = 0f;
 
@@ -36,14 +36,21 @@ public class CameraMove : MonoBehaviour
         // キャラクターのY軸をマウスのXの動きに反映させる
         _character.transform.Rotate(0, _xRotation * _rotateSpeed, 0);
 
-        // カメラのY軸をマウスのYの動きに反映させる
-        float nowAngle = _camera.transform.localRotation.x;
-        if (nowAngle > _yMinRotation && _yMaxRotation > nowAngle)
+        // カメラのX軸の角度をマウスのYの動きに反映させる
+        _camera.transform.Rotate(_yRotation * -_rotateSpeed, 0, 0);
+
+        //X軸の角度
+        float angleX = transform.eulerAngles.x;
+        //X軸の値を180度超えたら360引くことで制限しやすくする
+        if (angleX >= 180)
         {
-            _camera.transform.Rotate(_yRotation * -_rotateSpeed, 0, 0);
+            angleX = angleX - 360;
         }
-        
-        //_camera.transform.Rotate(_yRotation * -_rotateSpeed, 0, 0);
+        //Mathf.Clamp(値、最小値、最大値）でX軸の値を制限する
+        transform.eulerAngles = new Vector3(
+            Mathf.Clamp(angleX, _xMinRotation, _xMaxRotation),
+            transform.eulerAngles.y
+        ); ;
     }
 }
 
