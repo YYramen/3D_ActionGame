@@ -36,7 +36,7 @@ public class CameraMove : MonoBehaviour
         // キャラクターのY軸をマウスのXの動きに反映させる
         _character.transform.Rotate(0, _xRotation * _rotateSpeed, 0);
 
-        // カメラのY軸をマウスのYの動きに反映させる(カメラが正常な位置にいる場合)
+        // カメラのY軸をマウスのYの動きに反映させる
         float nowAngle = _camera.transform.localRotation.x;
         if (nowAngle > _yMinRotation && _yMaxRotation > nowAngle)
         {
