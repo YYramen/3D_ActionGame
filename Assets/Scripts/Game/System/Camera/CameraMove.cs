@@ -16,6 +16,11 @@ public class CameraMove : MonoBehaviour
     [Tooltip("マウスの X軸 の値を格納する")] float _xRotation = 0f;
     [Tooltip("マウスの Y軸 の値を格納する")] float _yRotation = 0f;
 
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     void Update()
     {
         // 入力の受け付け
