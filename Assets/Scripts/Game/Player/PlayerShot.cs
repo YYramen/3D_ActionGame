@@ -33,8 +33,8 @@ public class PlayerShot : MonoBehaviour
     /// </summary>
     private void ShotHookBullet()
     {
-        if (Physics.Raycast(_muzzlePos[0].position, Vector2.zero, out _hit, _rayDistance, _layerMask,
-             QueryTriggerInteraction.Ignore))
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out _hit, _rayDistance, _layerMask))
         {
             HitHook();
         }
@@ -45,8 +45,8 @@ public class PlayerShot : MonoBehaviour
     /// </summary>
     private void ShotPullBullet()
     {
-        if (Physics.Raycast(_muzzlePos[1].position, Vector2.zero, out _hit, _rayDistance, _layerMask,
-             QueryTriggerInteraction.Ignore))
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out _hit, _rayDistance, _layerMask))
         {
             HitPull();
         }
@@ -57,7 +57,7 @@ public class PlayerShot : MonoBehaviour
     /// </summary>
     private void HitHook()
     {
-        Instantiate(_hookBulletPrefab);
+        Instantiate(_hookBulletPrefab, _hit.point, Quaternion.identity);
         Debug.Log($"フックバレットが {_hit.collider.gameObject.name} に当たった");
     }
 
@@ -66,7 +66,7 @@ public class PlayerShot : MonoBehaviour
     /// </summary>
     private void HitPull()
     {
-        Instantiate(_pullBulletPrefab);
+        Instantiate(_pullBulletPrefab, _hit.point, Quaternion.identity);
         Debug.Log($"プルバレットが {_hit.collider.gameObject.name} に当たった");
     }
 }
