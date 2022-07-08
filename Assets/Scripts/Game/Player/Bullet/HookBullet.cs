@@ -7,10 +7,14 @@ using UnityEngine;
 /// </summary>
 public class HookBullet : MonoBehaviour
 {
-    [SerializeField, Tooltip("弾の生存時間")] float _lifeTime = 1f;
+    [SerializeField, Tooltip("マズルのゲームオブジェクト")] GameObject _muzzleObj = default;
+    [SerializeField, Tooltip("LineRenderer")] LineRenderer _lr = default;
+    [SerializeField, Tooltip("フックのTransform")] Transform _transform = default;
+
+    RaycastHit _hit;
 
     private void Start()
     {
-        Destroy(gameObject, _lifeTime);
+        
     }
 }
