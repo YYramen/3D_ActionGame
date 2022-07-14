@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class CameraMove : MonoBehaviour
 {
+
+    // Cinemachine使ってもいいかも
+
     [SerializeField, Tooltip("プレイヤーの位置")] Transform _character;
     [SerializeField, Tooltip("カメラの位置")] Transform _camera;
     [SerializeField, Tooltip("回転速度")] float _rotateSpeed = 5f;
@@ -42,7 +45,7 @@ public class CameraMove : MonoBehaviour
         _character.transform.Rotate(0, _xRotation * _rotateSpeed, 0);
 
         // カメラのX軸の角度をマウスのYの動きに反映させる
-        _camera.transform.Rotate(_yRotation * -_rotateSpeed, 0, 0);
+         _camera.transform.Rotate(_yRotation * -_rotateSpeed, 0, 0);
 
         //X軸の角度
         float angleX = transform.eulerAngles.x;

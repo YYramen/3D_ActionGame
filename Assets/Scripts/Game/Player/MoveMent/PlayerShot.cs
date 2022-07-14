@@ -13,14 +13,34 @@ public class PlayerShot : MonoBehaviour
     [SerializeField, Tooltip("フックバレットのプレハブ")] GameObject _hookBulletPrefab = default;
     [SerializeField, Tooltip("弾を飛ばせる距離")] float _rayDistance = 50f;
     [SerializeField, Tooltip("当たった物を判別するLayer")] LayerMask _layerMask;
-    RaycastHit _hit;
+
+    Rigidbody Rigidbody;
+    private void Start()
+    {
+        Rigidbody = this.GetComponentInParent<Rigidbody>();
+    }
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        // TODO : ベクトルを作る際カメラ基準になっているせいでプレイヤーが変な方向に飛ぶので
+        //        それを直す
+        var dir = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(_muzzlePos[0].position, dir.direction, out var hit))
         {
-            ShotHookBullet();
+            var origin = transform.position;
+            var targetPos = hit.point;
+
+            var forceDirection = origin + targetPos;
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Debug.Log(forceDirection);
+                Rigidbody.AddForce(forceDirection * 10);
+            }
         }
+
+
 
         if (Input.GetButtonDown("Fire2"))
         {

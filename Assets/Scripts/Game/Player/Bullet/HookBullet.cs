@@ -8,13 +8,13 @@ using UnityEngine;
 public class HookBullet : MonoBehaviour
 {
     [SerializeField, Tooltip("マズルのゲームオブジェクト")] GameObject _muzzleObj = default;
-    [SerializeField, Tooltip("LineRenderer")] LineRenderer _lr = default;
+    //[SerializeField, Tooltip("LineRenderer")] LineRenderer _lr = default;
     [SerializeField, Tooltip("フックのTransform")] Transform _transform = default;
 
     RaycastHit _hit;
 
     private void Start()
     {
-        
+        //Vector3.MoveTowards(this.transform.position);
     }
 }
