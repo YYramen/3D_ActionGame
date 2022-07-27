@@ -20,11 +20,10 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        InputMove();
-    }
+        InputDirection();
 
-    private void FixedUpdate()
-    {
+        CharacterRotate();
+
         Move();
     }
 
@@ -33,27 +32,28 @@ public class PlayerMove : MonoBehaviour
     /// </summary>
     private void CharacterRotate()
     {
-        Vector3 cameraForward = Camera.main.transform.forward;
-        this.transform.LookAt(cameraForward);
+        var inputX = Input.GetAxis("Mouse X");
+
+        if (inputX != 0)
+        {
+            transform.Rotate(0f, inputX, 0f);
+        }
     }
 
     /// <summary>
     /// 入力を受け付ける関数
     /// </summary>
-    private void InputMove()
+    private Vector3 InputDirection()
     {
         // 入力を受け付ける
         float h = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
+        float v = Input.GetAxisRaw("Vertical");
 
-        // カメラの方向から、X-Z 平面のベクトルを取得
-        Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
+        var dir = Vector3.right * h + Vector3.forward * v;
+        dir = Camera.main.transform.TransformDirection(dir);
+        dir.y = 0;
 
-        // 入力値とカメラの向きから、移動方向を決定
-        Vector3 moveForward = cameraForward * z + Camera.main.transform.right * h;
-
-        // 変数に速度を代入
-        _moveVelocity = moveForward * _moveSpeed + new Vector3(0, _rb.velocity.y, 0);
+        return dir;
     }
 
     /// <summary>
@@ -61,7 +61,22 @@ public class PlayerMove : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        // InputMoveで作られたベクトル、速度をAddforceする
-        _rb.AddForce(_moveVelocity, ForceMode.Force);
+        var dir = InputDirection();
+
+        if (IsGround())
+        {
+            if (dir != Vector3.zero)
+            {
+                var vel = dir * _moveSpeed;
+                _rb.velocity = vel;
+            }
+        }
+    }
+
+    private bool IsGround()
+    {
+        var start = this.transform.position;
+        var end = start + Vector3.down * 10f;
+        return Physics.Raycast(start, end);
     }
 }
